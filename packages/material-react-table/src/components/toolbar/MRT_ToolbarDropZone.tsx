@@ -54,7 +54,7 @@ export const MRT_ToolbarDropZone = <TData extends MRT_RowData>({
         sx={(theme) => ({
           alignItems: 'center',
           backdropFilter: 'blur(4px)',
-          backgroundColor: alpha(
+          backgroundColor: (theme.alpha ?? alpha)(
             theme.palette.info.main,
             hoveredColumn?.id === 'drop-zone' ? 0.2 : 0.1,
           ),

@@ -23,7 +23,7 @@ export const getMRTTheme = <TData extends MRT_RowData>(
   const baseBackgroundColor =
     mrtThemeOverrides?.baseBackgroundColor ??
     (muiTheme.palette.mode === 'dark'
-      ? lighten(muiTheme.palette.background.default, 0.05)
+      ? (muiTheme.lighten ?? lighten)(muiTheme.palette.background.default, 0.05)
       : muiTheme.palette.background.default);
   return {
     baseBackgroundColor,
@@ -31,11 +31,20 @@ export const getMRTTheme = <TData extends MRT_RowData>(
     draggingBorderColor: muiTheme.palette.primary.main,
     matchHighlightColor:
       muiTheme.palette.mode === 'dark'
-        ? darken(muiTheme.palette.warning.dark, 0.25)
-        : lighten(muiTheme.palette.warning.light, 0.5),
-    menuBackgroundColor: lighten(baseBackgroundColor, 0.07),
-    pinnedRowBackgroundColor: alpha(muiTheme.palette.primary.main, 0.1),
-    selectedRowBackgroundColor: alpha(muiTheme.palette.primary.main, 0.2),
+        ? (muiTheme.darken ?? darken)(muiTheme.palette.warning.dark, 0.25)
+        : (muiTheme.lighten ?? lighten)(muiTheme.palette.warning.light, 0.5),
+    menuBackgroundColor: (muiTheme.lighten ?? lighten)(
+      baseBackgroundColor,
+      0.07,
+    ),
+    pinnedRowBackgroundColor: (muiTheme.alpha ?? alpha)(
+      muiTheme.palette.primary.main,
+      0.1,
+    ),
+    selectedRowBackgroundColor: (muiTheme.alpha ?? alpha)(
+      muiTheme.palette.primary.main,
+      0.2,
+    ),
     ...mrtThemeOverrides,
   };
 };
@@ -65,8 +74,8 @@ export const getCommonPinnedCellStyles = <TData extends MRT_RowData>({
   return {
     '&[data-pinned="true"]': {
       '&:before': {
-        backgroundColor: alpha(
-          darken(
+        backgroundColor: (theme.alpha ?? alpha)(
+          (theme.darken ?? darken)(
             baseBackgroundColor,
             theme.palette.mode === 'dark' ? 0.05 : 0.01,
           ),
@@ -74,9 +83,9 @@ export const getCommonPinnedCellStyles = <TData extends MRT_RowData>({
         ),
         boxShadow: column
           ? isPinned === 'left' && column.getIsLastColumn(isPinned)
-            ? `-4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+            ? `-4px 0 4px -4px ${(theme.alpha ?? alpha)(theme.palette.grey[700], 0.5)} inset`
             : isPinned === 'right' && column.getIsFirstColumn(isPinned)
-              ? `4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+              ? `4px 0 4px -4px ${(theme.alpha ?? alpha)(theme.palette.grey[700], 0.5)} inset`
               : undefined
           : undefined,
         ...commonCellBeforeAfterStyles,

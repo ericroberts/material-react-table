@@ -31,9 +31,9 @@ export const MRT_TableLoadingOverlay = <TData extends MRT_RowData>({
 
   return (
     <Box
-      sx={{
+      sx={(theme) => ({
         alignItems: 'center',
-        backgroundColor: alpha(baseBackgroundColor, 0.5),
+        backgroundColor: (theme.alpha ?? alpha)(baseBackgroundColor, 0.5),
         bottom: 0,
         display: 'flex',
         justifyContent: 'center',
@@ -44,7 +44,7 @@ export const MRT_TableLoadingOverlay = <TData extends MRT_RowData>({
         top: 0,
         width: '100%',
         zIndex: 3,
-      }}
+      })}
     >
       {circularProgressProps?.Component ?? (
         <CircularProgress
