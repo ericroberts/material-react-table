@@ -56,7 +56,7 @@ export const MRT_BottomToolbar = <TData extends MRT_RowData>({
       sx={(theme) => ({
         ...getCommonToolbarStyles({ table, theme }),
         bottom: isFullScreen ? '0' : undefined,
-        boxShadow: `0 1px 2px -1px ${alpha(
+        boxShadow: `0 1px 2px -1px ${(theme.alpha ?? alpha)(
           theme.palette.grey[700],
           0.5,
         )} inset`,

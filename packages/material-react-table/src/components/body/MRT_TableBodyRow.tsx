@@ -157,8 +157,8 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
       ? isRowSelected
         ? cellHighlightColor
         : theme.palette.mode === 'dark'
-          ? `${lighten(baseBackgroundColor, 0.3)}`
-          : `${darken(baseBackgroundColor, 0.3)}`
+          ? `${(theme.lighten ?? lighten)(baseBackgroundColor, 0.3)}`
+          : `${(theme.darken ?? darken)(baseBackgroundColor, 0.3)}`
       : undefined;
 
   return (
@@ -186,7 +186,10 @@ export const MRT_TableBodyRow = <TData extends MRT_RowData>({
         sx={(theme: Theme) => ({
           '&:hover td:after': cellHighlightColorHover
             ? {
-                backgroundColor: alpha(cellHighlightColorHover, 0.3),
+                backgroundColor: (theme.alpha ?? alpha)(
+                  cellHighlightColorHover,
+                  0.3,
+                ),
                 ...commonCellBeforeAfterStyles,
               }
             : undefined,
